@@ -57,7 +57,7 @@ void incluir(){
 		cout<<"\nAnio de entrada: "; cin>>k.ent.anio;
 		do {
 			cout<<"\nEl vehiculo tiene garantia? (si o no): "; gets(k.g);			
-		} while (k.g=="si"||k.g=="no");
+		} while (k.g!="si"||k.g!="no");
 		if (strcmp(k.g,"si")==0){
 			do {
 			cout<<"\nIngrese cuantas garantias tiene su vehiculo(maximo 3): "; cin>>k.nrogarant;
