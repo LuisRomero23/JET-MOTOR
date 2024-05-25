@@ -9,7 +9,7 @@ struct fecha {
 };
 
 struct garantia{
-	char concepta;
+	char concepto;
 	float porcentaje;
 };
 
@@ -54,15 +54,43 @@ void incluir(){
 		cout<<"\nMes de entrada: "; cin>>k.ent.mes;
 		cout<<"\nAnio de entrada: "; cin>>k.ent.anio;
 		cout<<"\nEl vehiculo tiene garantia? (si o no): "; gets(k.g);
-		if (strcmp(k.g,"si")==0);
-		do {
-			cout<<"\nIngrese cuantas garantias tiene su vehiculo: "; cin>>k.nrogarant;
+		if (strcmp(k.g,"si")==0){
+			do {
+			cout<<"\nIngrese cuantas garantias tiene su vehiculo(maximo 3): "; cin>>k.nrogarant;
 		} while (k.nrogarant < 0 || k.nrogarant >=3);
+			for (int i = 0 ; i < k.nrogarant ; i++){
+				cout<<"\nIngrese el concepto de su garantia #" <<i+1<<": "; gets(k.garant[i].concepto);
+				cout<<"\nIngrese el porcentaje del precio cubierto de la garantia #" <<i+1<<": "; cin>>k.garant[i].porcentaje;
+			}
+		} else {
+			k.nrogarant = 0;
+		}
 	}
 }
 
 void consultar(){
-	
+	char serialcomp[20];
+	cout<<"\nIngrese la serial del vehiculo: "; gets(serialcomp);
+	if(busqueda(serialcomp)==true){
+		cout<<"\nDatos adjuntados de de la serial" << serialcomp <<": \n";
+		cout<<"\nModelo del vehiculo: "<< k.modelo;
+		cout<<"\nColor de vehiculo: "<< k.color;
+		cout<<"\nMarca del vehiculo: "<< k.marca;
+		cout<<"\nPrecio del vehiculo: "<< k.precio;
+		cout<<"\nFecha de fabriacion del vehiculo ";
+		cout<<"\nDia de fabricacion: "<< k.fab.dia;
+		cout<<"\nMes de fabriacion: "<< k.fab.mes;
+		cout<<"\nAnio de fabriacion: "<< k.fab.anio;
+		cout<<"\nFecha de entrada del vehiculo al inventario "; 
+		cout<<"\nDia de entrada: "<< k.ent.dia;
+		cout<<"\nMes de entrada: "<< k.ent.mes;
+		cout<<"\nAnio de entrada: "<< k.ent.anio;
+		cout<<"\nNumero de garantias: "<<k.nrogarant;
+		cout<<"\nNumero de garantias: "
+		for (int i = 0 ; i < k.nrogarant ; i++){
+		
+		}
+	}
 }
 
 void modificar(){
