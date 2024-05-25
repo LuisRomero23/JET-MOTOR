@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
-#include <conio.h> 
+#include <conio.h>
 using namespace std;
 
 struct fecha {
@@ -9,18 +9,73 @@ struct fecha {
 };
 
 struct garantia{
-	char concepta
-	float porcentaje
+	char concepta;
+	float porcentaje;
 };
 
 struct carro{
-	char serial[10], marca[20], modelo[20], color[15];
+	char serial[10], marca[20], modelo[20], color[15], g[20];
 	float precio;
+	int nrogarant;
 	struct fecha fab; //fabricacion
 	struct fecha ent; //entrada al inventario
 	struct garantia garant[3];
-};
+}k;
 
+bool busqueda (char serial[10]){
+	bool v = false;
+	FILE *busca;
+	busca = fopen("archivo.dat","r");
+	while (v == false && fread(&k,sizeof(k), 1, busca)==1)
+		if (strcmp(serial,k.serial)==0){
+			v = true;
+			break;
+		}
+	fclose(busca);
+	return(v);
+}
+
+void incluir(){
+	char g[2];
+	cout<<"\nIngrese la serial del vehiculo: "; gets(k.serial);
+	if(busqueda(k.serial)==true){
+		cout<<"\nLa serial ya esta en el sistema";
+	} else {
+		cout<<"\nIngrese el modelo del vehiculo: "; gets(k.modelo);
+		cout<<"\nIngrese el color de vehiculo: "; gets(k.color);
+		cout<<"\nIngrese marca del vehiculo: "; gets(k.marca);
+		cout<<"\nIngrese precio del vehiculo: "; cin>>k.precio;
+		cout<<"\nIngrese fecha de fabriacion del vehiculo ";
+		cout<<"\nDia de fabricacion: "; cin>>k.fab.dia;
+		cout<<"\nMes de fabriacion: "; cin>>k.fab.mes;
+		cout<<"\nAnio de fabriacion: "; cin>>k.fab.anio;
+		cout<<"\nIngrese fecha de entrada del vehiculo al inventario "; 
+		cout<<"\nDia de entrada: "; cin>>k.ent.dia;
+		cout<<"\nMes de entrada: "; cin>>k.ent.mes;
+		cout<<"\nAnio de entrada: "; cin>>k.ent.anio;
+		cout<<"\nEl vehiculo tiene garantia? (si o no): "; gets(k.g);
+		if (strcmp(k.g,"si")==0);
+		do {
+			cout<<"\nIngrese cuantas garantias tiene su vehiculo: "; cin>>k.nrogarant;
+		} while (k.nrogarant < 0 || k.nrogarant >=3);
+	}
+}
+
+void consultar(){
+	
+}
+
+void modificar(){
+	
+}
+
+void eliminar(){
+	
+}
+
+void salir(){
+	
+}
 int main(){
 	struct carro c; // c = carro
 	cargar(//la estructura);
