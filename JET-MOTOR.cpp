@@ -44,7 +44,9 @@ void incluir(){
 		cout<<"\nIngrese el modelo del vehiculo: "; gets(k.modelo);
 		cout<<"\nIngrese el color de vehiculo: "; gets(k.color);
 		cout<<"\nIngrese marca del vehiculo: "; gets(k.marca);
-		cout<<"\nIngrese precio del vehiculo: "; cin>>k.precio;
+		do {
+			cout<<"\nIngrese precio del vehiculo: "; cin>>k.precio;
+		} while (k.precio < 0);
 		cout<<"\nIngrese fecha de fabriacion del vehiculo ";
 		cout<<"\nDia de fabricacion: "; cin>>k.fab.dia;
 		cout<<"\nMes de fabriacion: "; cin>>k.fab.mes;
@@ -53,7 +55,9 @@ void incluir(){
 		cout<<"\nDia de entrada: "; cin>>k.ent.dia;
 		cout<<"\nMes de entrada: "; cin>>k.ent.mes;
 		cout<<"\nAnio de entrada: "; cin>>k.ent.anio;
-		cout<<"\nEl vehiculo tiene garantia? (si o no): "; gets(k.g);
+		do {
+			cout<<"\nEl vehiculo tiene garantia? (si o no): "; gets(k.g);			
+		} while (k.g=="si"||k.g=="no");
 		if (strcmp(k.g,"si")==0){
 			do {
 			cout<<"\nIngrese cuantas garantias tiene su vehiculo(maximo 3): "; cin>>k.nrogarant;
@@ -65,6 +69,9 @@ void incluir(){
 		} else {
 			k.nrogarant = 0;
 		}
+		FILE *registro; //para que todo lo que se este metiendo a k se ponga en un archivo.
+		registro = fopen("archivo.dat","at+");
+		fclose(registro);
 	}
 }
 
@@ -86,9 +93,9 @@ void consultar(){
 		cout<<"\nMes de entrada: "<< k.ent.mes;
 		cout<<"\nAnio de entrada: "<< k.ent.anio;
 		cout<<"\nNumero de garantias: "<<k.nrogarant;
-		cout<<"\nNumero de garantias: "
 		for (int i = 0 ; i < k.nrogarant ; i++){
-		
+			cout<<"\nConcepto de la garantia #"<<i+1<<": " <<k.garant[i].concepto;
+			cout<<"\nPorcentaje de la garantia #"<<i+1<<": " <<k.garant[i].porcentaje;
 		}
 	}
 }
