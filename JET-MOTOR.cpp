@@ -5,9 +5,9 @@
   Usar fgets() en lugar de gets().
   Este el ultimo ha sido reemplazado en versiones futuras de C
 */
-
+#include <conio.h>
+#include "fecha.h>
 #include "datos.h"
-
 using namespace std;
 
 bool busqueda(char serial[10], Carro k) {
