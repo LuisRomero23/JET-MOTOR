@@ -5,9 +5,9 @@
   Usar fgets() en lugar de gets().
   Este el ultimo ha sido reemplazado en versiones futuras de C
 */
-#include <conio.h>
-#include "fecha.h>
+
 #include "datos.h"
+
 using namespace std;
 
 bool busqueda(char serial[10], Carro k) {
@@ -60,8 +60,9 @@ void incluir() {
     char seleccion[3];
     do {
       cout << "\nEl vehiculo tiene garantia? (si o no): ";
-      fgets(seleccion, 3, stdin);
-    } while (strcmp(seleccion, "si") != 0 || strcmp(seleccion, "no") != 0);
+      scanf("%s", seleccion);
+      getc(stdin);
+    } while (strcmp(seleccion, "si") != 0 && strcmp(seleccion, "no") != 0);
     if (strcmp(seleccion, "si") == 0) {
       k.garantia = true;
       do {
@@ -124,25 +125,26 @@ int main() {
   Carro c; // c = carro
   // cargar(la estructura);
   bool salir = false;
-  int n;
+  char n;
 
   while (!salir) {
     cout << "aqui van las opciones";
     cin >> n;
     switch (n) {
-    case 1:
-      funcion1(estructura);
+    case '1':
+    //  funcion1(estructura);
+    incluir();
       break;
-    case 2:
-      funcion2(estructura);
+    case '2':
+    // funcion2(estructura);
       break;
-    case 3:
-      funcion3(estructura);
+    case '3':
+    //  funcion3(estructura);
       break;
-    case 4:
-      funcion4(estructura);
+    case '4':
+    //  funcion4(estructura);
       break;
-    case 5:
+    case '5':
       cout << "cerrando el programa" << endl;
       salir = !salir;
       break;
