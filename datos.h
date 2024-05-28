@@ -12,9 +12,9 @@ typedef struct carro {
   char color[15];
 
   float precio;
-
+  
+  bool garantia;
   int nroGarantias;
-
   Garantia garantias[3];
 
   Fecha fabricacion;

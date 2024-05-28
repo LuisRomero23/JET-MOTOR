@@ -5,9 +5,7 @@
   Usar fgets() en lugar de gets().
   Este el ultimo ha sido reemplazado en versiones futuras de C
 */
-#include <conio.h>
 
-#include "fecha.h"
 #include "datos.h"
 
 using namespace std;
@@ -27,7 +25,7 @@ bool busqueda(char serial[10], Carro k) {
 
 void incluir() {
   Carro k;
-  
+
   char g[2];
   cout << "\nIngrese la serial del vehiculo: ";
   fgets(k.serial, 10, stdin);
@@ -58,18 +56,21 @@ void incluir() {
     cin >> k.entrada.mes;
     cout << "\nAnio de entrada: ";
     cin >> k.entrada.ano;
+
+    char seleccion[3];
     do {
       cout << "\nEl vehiculo tiene garantia? (si o no): ";
-      gets(k.g);
-    } while (k.g != "si" || k.g != "no");
-    if (strcmp(k.g, "si") == 0) {
+      fgets(seleccion, 3, stdin);
+    } while (strcmp(seleccion, "si") != 0 || strcmp(seleccion, "no") != 0);
+    if (strcmp(seleccion, "si") == 0) {
+      k.garantia = true;
       do {
         cout << "\nIngrese cuantas garantias tiene su vehiculo(maximo 3): ";
         cin >> k.nroGarantias;
       } while (k.nroGarantias < 0 || k.nroGarantias >= 3);
       for (int i = 0; i < k.nroGarantias; i++) {
         cout << "\nIngrese el concepto de su garantia #" << i + 1 << ": ";
-        gets(k.garantias[i].concepto);
+        fgets(k.garantias[i].concepto, 50, stdin);
         cout << "\nIngrese el porcentaje del precio cubierto de la garantia #"
              << i + 1 << ": ";
         cin >> k.garantias[i].cobertura;
@@ -88,7 +89,7 @@ void consultar() {
   Carro k;
   char serialcomp[20];
   cout << "\nIngrese la serial del vehiculo: ";
-  gets(serialcomp);
+  fgets(serialcomp, 20, stdin);
   if (busqueda(serialcomp, k) == true) {
     cout << "\nDatos adjuntados de de la serial" << serialcomp << ": \n";
     cout << "\nModelo del vehiculo: " << k.modelo;
@@ -118,26 +119,37 @@ void modificar() {}
 void eliminar() {}
 
 void salir() {}
+
 int main() {
-  struct carro c; // c = carro
-        cargar(//la estructura);
-	int n; 
-	do {
-    cout << "aqui van las opciones" cin >> n;
-    if (n == 1) {
+  Carro c; // c = carro
+  // cargar(la estructura);
+  bool salir = false;
+  int n;
+
+  while (!salir) {
+    cout << "aqui van las opciones";
+    cin >> n;
+    switch (n) {
+    case 1:
       funcion1(estructura);
-    } else if (n == 2) {
+      break;
+    case 2:
       funcion2(estructura);
-    } else if (n == 3) {
+      break;
+    case 3:
       funcion3(estructura);
-    } else if (n == 4) {
+      break;
+    case 4:
       funcion4(estructura);
-    } else if (n == 5) {
-      cout << "cerrando el programa"
-    } else {
+      break;
+    case 5:
+      cout << "cerrando el programa" << endl;
+      salir = !salir;
+      break;
+    default:
       cout << "error opcion no valida";
     }
-    getch();
-	} while (n != 5);
-	return 0;
+  }
+
+  return 0;
 }
