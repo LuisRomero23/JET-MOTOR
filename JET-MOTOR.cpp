@@ -42,6 +42,8 @@ void incluir() {
       cout << "\nIngrese precio del vehiculo: ";
       cin >> k.precio;
     } while (k.precio < 0);
+    
+    do {
     cout << "\nIngrese fecha de fabriacion del vehiculo ";
     cout << "\nDia de fabricacion: ";
     cin >> k.fabricacion.dia;
@@ -49,6 +51,9 @@ void incluir() {
     cin >> k.fabricacion.mes;
     cout << "\nAnio de fabriacion: ";
     cin >> k.fabricacion.ano;
+    } while (FechaValida(k.fabricacion) != true);
+    
+    do {
     cout << "\nIngrese fecha de entrada del vehiculo al inventario ";
     cout << "\nDia de entrada: ";
     cin >> k.entrada.dia;
@@ -56,7 +61,8 @@ void incluir() {
     cin >> k.entrada.mes;
     cout << "\nAnio de entrada: ";
     cin >> k.entrada.ano;
-
+	} while (FechaValida(k.entrada) != true);
+	
     char seleccion[3];
     do {
       cout << "\nEl vehiculo tiene garantia? (si o no): ";
