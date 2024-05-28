@@ -1,2 +1,0 @@
-# JET-MOTOR
-JET MOTOR progra 2
