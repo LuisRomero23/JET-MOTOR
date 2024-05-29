@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-void gotoxy(int x,int y){  //funcion para que aparesca el texto en el medio del terminal enves de arriba a la izquierda
+void gotoxy(int x,int y){  
       HANDLE hcon;  
       hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
       COORD dwPos;  
@@ -336,11 +337,169 @@ char serialcomp[20]; //una variable para comparar la serial ingresada con las se
 
 
 
-void modificar();
+void modificar(){
+	fflush(stdin);
+	bool fechavalida1, fechavalida2;
+	char serialbus[20],posee[2];
+	int m,i,diasfecha1,diasfecha2; system("CLS");
+	
+	
+	printf("Ingrese el serial del vehiculo que desea modificar:");
+	fflush(stdin);
+	gets(serialbus);
+	
+	m=busqueda(serialbus);
+	
+	
+if(m==1){
+	FILE*arch1;
+	arch1=fopen("JETMOTORSG11.dat","r");
+	
+	FILE*arch2;
+	arch2=fopen("temp.dat","at+");
+	while((fread(&vehi,sizeof(vehi),1,arch1)==1)){
+		
+	if(strcmp(vehi.serial,serialbus)==0){
+			
+	printf("Ingrese la marca del vehiculo:"); gets(vehi.marca);
 
-void eliminar();
+	printf("Ingrese el modelo del vehiculo:");gets(vehi.modelo);
+
+
+
+do{
+	printf("Ingrese la fecha de fabricacion del vehiculo:\n");
+	/*gotoxy(0,4);*/printf("Dia:");cin>>vehi.ffab.dia;
+	/*gotoxy(10,4);*/printf("Mes:");cin>>vehi.ffab.mes;
+	/*gotoxy(20,4);*/printf("Ano:");cin>>vehi.ffab.anio;
+
+	fechavalida1=validarfecha(vehi.ffab.dia,vehi.ffab.mes,vehi.ffab.anio);
+	if(!fechavalida1){
+		printf("Fecha invalida, intente nuevamente\n");
+	}
+	
+}while(!fechavalida1);
+
+fflush(stdin);
+
+
+do{
+	printf("Ingrese la fecha de entrada al inventario:\n");
+	/*gotoxy(0,6);*/printf("Dia:");cin>>vehi.fent.dia;
+	/*gotoxy(10,6);*/printf("Mes:");cin>>vehi.fent.mes;
+	/*gotoxy(20,6);*/printf("Ano:");cin>>vehi.fent.anio;
+
+	fechavalida2=validarfecha(vehi.fent.dia,vehi.fent.mes,vehi.fent.anio);
+	if(!fechavalida2){
+		printf("Fecha invalida, intente nuevamente\n");
+	}else 
+	convertirADias(vehi.ffab);convertirADias(vehi.fent);
+	
+	diasfecha1=convertirADias(vehi.ffab);
+	diasfecha2=convertirADias(vehi.fent);
+	
+	if(diasfecha2<diasfecha1){
+		printf("Fecha de entrada al inventario invalida, intente nuevamente\n");
+	}
+	
+	
+	
+}while(!fechavalida2||diasfecha2<diasfecha1);
+
+
+fflush(stdin);
+printf("Ingrese el color del vehiculo: ");gets(vehi.color);
+fflush(stdin);
+
+do{
+	fflush(stdin);
+	printf("Ingrese el precio del vehiculo: ");scanf("%.2f",&vehi.precio);
+	fflush(stdin);
+	
+	if (vehi.precio<0){
+	printf("Precio invalido, intente nuevamente");
+	}
+
+}while(vehi.precio<0);//validacion de precio
+
+
+printf("El vehiculo posee garantia?(SI/NO):");gets(posee);
+
+if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
+	printf("Ingrese el numero de garantias:");cin>>vehi.ngarant;
+	
+	if (vehi.ngarant<0||vehi.ngarant>3){
+		printf("Error numero de grarantias invalido, intente nuevamente:");	
+	}else
+
+	for(i=0;i<vehi.ngarant;i++){
+		printf("Ingrese los datos de la grantia #%d\n",i+1);
+		fflush(stdin);
+		printf("Concepto de la garantia #%d:",i+1);gets(vehi.g[i].concepto);
+		fflush(stdin);
+		printf("Ingrese el porcentaje cubierto por la grantia #%d:",i+1);scanf("%f",&vehi.g[i].cobertura);
+	}
+
+}else if(strcmp(posee,"No")==0||strcmp(posee,"no")==0||strcmp(posee,"No")==0){
+	printf("El vehiculo no posee garantia");//validacion de garantia
+	vehi.ngarant=0;
+}
+				
+		}
+		
+	fwrite(&vehi,sizeof(vehi),1,arch2);
+	}
+	fclose(arch1);
+	fclose(arch2);
+	remove("JETMOTORSG11.dat");
+	rename("temp.dat","JETMOTORSG11.dat");
+	printf("\nRegristro modificado");
+}else{
+	printf("\nSerial no encontrado");
+};
+getche();
+};
+
+
+
+void eliminar(){
+	fflush(stdin);
+	int m,i; system("CLS");
+	char serialbus[20];
+	
+	printf("Ingrese el serial del vehiculo:");gets(serialbus);
+	
+	m=busqueda(serialbus);
+	
+	if(m==1){
+		FILE*arch1;
+		arch1=fopen("JETMOTORSG11.dat","r");
+		FILE*arch2;
+		arch2=fopen("temp.dat","at+");
+		
+	while((fread(&vehi,sizeof(vehi),1,arch1)==1)){
+		if(strcmp(vehi.serial,serialbus)==1){
+			fwrite(&vehi,sizeof(vehi),1,arch2);
+		}
+	}
+	fclose(arch1);
+	fclose(arch2);
+	remove("JETMOTORSG11.dat");
+	rename("temp.dat","JETMOTORSG11.dat");
+	printf("\nRegistro eliminado");
+	}
+	else{
+		printf("\nSerial no encontrado");
+	}
+	getche();
+};
+
 
 void reportes();
+
+
+
+
 
 
 int main(){
@@ -355,12 +514,12 @@ break;
 case '2': consultar();
 break; 
 
-/*case '3': modificar();
+case '3': modificar();
 break; 
 
 case '4': eliminar();
 break; 
-
+/*
 case '5': reportes();
 break; */
 }
