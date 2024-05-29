@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void gotoxy(int x,int y){  
+void gotoxy(int x,int y){  //funcion para que aparesca el texto en el medio del terminal enves de arriba a la izquierda
       HANDLE hcon;  
       hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
       COORD dwPos;  
