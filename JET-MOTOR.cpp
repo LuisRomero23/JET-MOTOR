@@ -65,19 +65,7 @@ int convertirADias(struct fecha f) {
     return totalDias;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//funcion para validar las fechas y que tengan sentido dependiendo de su dia, mes, y si es anio bisiesto
 bool validarfecha(int dia, int mes, int anio){
 	
 	if (anio < 0) {
@@ -144,9 +132,7 @@ gotoxy(50,20);printf("Seleccion = ");
 y = getchar();
 return (y); }
 
-
-
-
+//funcion para encontrar seriales de autos que ya estan en el sistema 
 int busqueda(char serialbus1[20]){
 	int band=0;
 	int z;
@@ -272,8 +258,6 @@ if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
 	printf("El vehiculo no posee garantia");//validacion de garantia
 	vehi.ngarant=0;
 }
-
-
 
 
 FILE *arch1;
