@@ -65,7 +65,7 @@ int convertirADias(struct fecha f) {
     return totalDias;
 }
 
-//funcion para validar las fechas y que tengan sentido dependiendo de su dia, mes, y si es anio bisiesto
+//funcion para validar las fechas para que tengan sentido dependiendo de el dia y el mes en que estan
 bool validarfecha(int dia, int mes, int anio){
 	
 	if (anio < 0) {
