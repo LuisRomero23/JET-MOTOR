@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -35,11 +34,10 @@ struct vehiculo{
 	struct garantia g[3];
 }vehi;
 
-
+//funcion para validar un año bisiesto
 bool esBisiesto(int anio) {
     return (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
-}//funcion para validar un año bisiesto
-
+}
 
 
 // Función para convertir una fecha a días desde una fecha base (por ejemplo, 01/01/0001)
@@ -65,7 +63,8 @@ int convertirADias(struct fecha f) {
     return totalDias;
 }
 
-//funcion para validar las fechas para que tengan sentido dependiendo de el dia y el mes en que estan
+
+//Funcion para validar fecha
 bool validarfecha(int dia, int mes, int anio){
 	
 	if (anio < 0) {
@@ -108,31 +107,75 @@ bool validarfecha(int dia, int mes, int anio){
     return true;
 }
 
+
 char sel;
 
 char menu(){ 
 char y; system("CLS");
 
-gotoxy(30,6);printf("Menu de Opciones");
+gotoxy(1,2);printf("		   $$$$$| $$$$$$$$$ $$$$$$$$$|      $$       $$   $$$$$$  $$$$$$$$ |  $$$$$$   $$$$$$$    $$$$$$   ");
+gotoxy(1,3);printf("		   $__$$ |$$  _____|$__$$  __|      $$$     $$$ |$$  __$$ |__$$  __|$$  __$$  $$  __$$  $$  __$$  ");
+gotoxy(1,4);printf("		      $$ |$$ |         $$ |         $$$$   $$$$ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$ |  __|");
+gotoxy(1,5);printf("		      $$ |$$$$$$       $$ |         $$ $$ $$ $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$$$$$$  | $$$$$$   ");
+gotoxy(1,6);printf("		$$$   $$ |$$  __|      $$ |         $$  $$$  $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$  __$$<  $____$$  ");
+gotoxy(1,7);printf("		$$ |  $$ |$$ |         $$ |         $$ | $  $ $ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$    $$ |");
+gotoxy(1,8);printf("		$$$$$$$  |$$$$$$$$$    $$ |         $$ | |_| $$ | $$$$$$  |  $$ |    $$$$$$  |$$ |  $$ | $$$$$$  |");
+gotoxy(1,9);printf("		 $______$ $________|   $__|         |__|     |__| $______$   |__|    $______$|__ |  |__| $______$ ");
 
-gotoxy(30,8);printf("1.- Incluir Registros");
+gotoxy(30,20);printf("Menu de Opciones");
 
-gotoxy(30,10);printf("2.- Consultar Registros");
+gotoxy(30,22);printf("1.- Incluir Registros");
 
-gotoxy(30,12);printf("3.- Modificar Registros");
+gotoxy(30,24);printf("2.- Consultar Registros");
 
-gotoxy(30,14);printf("4.- Eliminar Registros");
+gotoxy(30,26);printf("3.- Modificar Registros");
 
-gotoxy(30,16);printf("5.- Registros");
+gotoxy(30,28);printf("4.- Eliminar Registros");
 
-gotoxy(30,18);printf("6.- Salida");
+gotoxy(30,30);printf("5.- Reportes");
 
-gotoxy(50,20);printf("Seleccion = ");
+gotoxy(30,32);printf("6.- Salida");
+
+gotoxy(50,34);printf("Seleccion = ");
 
 y = getchar();
 return (y); }
 
-//funcion para encontrar seriales de autos que ya estan en el sistema 
+void conversor(float total){
+	float tasa,endolar;
+	
+	printf("Ingrese la tasa de conversion (Bs.-> $)");
+	scanf("%f",&tasa);
+	
+	endolar=total*tasa;
+	
+	printf("El valor en USD es %.2f $",endolar);
+	
+}
+
+char submenu(){
+	char y; system("CLS");
+
+gotoxy(40,6);printf("Sub-Menu");
+
+gotoxy(30,8);printf("1.- Modelo por periodo");
+
+gotoxy(30,10);printf("2.- Total por marca");
+
+gotoxy(30,12);printf("3.- Cobertura a Color");
+
+gotoxy(30,14);printf("4.- Consultar por Garantia");
+
+gotoxy(30,16);printf("5.- Menu principal");
+
+gotoxy(50,20);printf("Seleccion = ");
+
+y = getchar();
+return (y);
+
+}
+
+//busqueda por serial
 int busqueda(char serialbus1[20]){
 	int band=0;
 	int z;
@@ -153,6 +196,128 @@ int busqueda(char serialbus1[20]){
 	return(z);
 }
 
+//busqueda por modelo, primera funcion de la opcion reportes
+void busqueda2(char modbus1[20]){
+	fflush(stdin);	
+	int band=0;
+	struct fecha f1,f2;
+	int diasfecha1,diasfecha2,diasfechaE;
+	bool fechavalida1, fechavalida2;
+	float total=0;
+	char rial[2];
+	FILE*arch1;
+	
+	arch1=fopen("JETMOTORSG11.dat","r");
+	
+	
+do{
+	printf("Ingrese el rango de fechas en el que desea buscar\n");
+	printf("Ingrese la primera fecha:\n");
+	printf("Dia:");cin>>f1.dia;
+	printf("Mes:");cin>>f1.mes;
+	printf("Ano:");cin>>f1.anio;
+
+	fechavalida1=validarfecha(f1.dia,f1.mes,f1.anio);
+	if(!fechavalida1){
+		printf("Fecha invalida, intente nuevamente\n");
+					}	
+}while(!fechavalida1);
+
+fflush(stdin);
+
+do{
+	printf("Ingrese la segunda fecha:\n");
+	printf("Dia:");cin>>f2.dia;
+	printf("Mes:");cin>>f2.mes;
+	printf("Ano:");cin>>f2.anio;
+
+	fechavalida2=validarfecha(f2.dia,f2.mes,f2.anio);
+	if(!fechavalida2){
+		printf("Fecha invalida, intente nuevamente\n");
+					}else 
+	convertirADias(f1);convertirADias(f2);
+	diasfecha1=convertirADias(f1);
+	diasfecha2=convertirADias(f2);
+	
+	if(diasfecha2<diasfecha1){
+		printf("Rango de fechas invalido, intente nuevamente\n");
+							}		
+}while(!fechavalida2||diasfecha2<diasfecha1);
+	
+fflush(stdin);	
+	
+	while((band==0)&&(fread(&vehi,sizeof(vehi),1,arch1)==1)){
+		if(strcmp(vehi.modelo,modbus1)==0){
+			if(convertirADias(vehi.fent)>diasfecha1&&convertirADias(vehi.fent)<diasfecha2){
+				
+				cout<<"\nSerial " << vehi.serial <<":\n";
+				cout<<"Marca del vehiculo: "<< vehi.marca;
+				cout<<"\nFecha de entrada del vehiculo al inventario "; 
+				cout<<"\nDia de entrada: "<< vehi.fent.dia;
+				cout<<"\nMes de entrada: "<< vehi.fent.mes;
+				cout<<"\nAnio de entrada: "<< vehi.fent.anio;
+				//opcion para mostrar precio en verdes 
+				printf("\nPrecio del vehiculo:%.2f Bs.\n",vehi.precio);
+				//funcion para mostrar el precio en verdes 	;
+				total+=vehi.precio;
+				
+			}	    
+		}
+	}
+	if(total==0){
+		printf("No se encontro este modelo, intente nuevamente");
+	}else{
+		fflush(stdin);			
+	printf("Desea su total expresado en USD?(SI/NO.):");gets(rial);
+
+if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
+	conversor(total);
+}else{
+	printf("El total acumulado es %.2f Bs.",total);
+}
+	}
+
+	fclose(arch1);
+	
+}
+
+//busqueda por color,tercera funcion de la opcion reportes
+void busqueda3 ( char colorbus1[20] ){
+	fflush(stdin);
+	int band=0;
+	int i;
+	char rial[2];
+	
+	FILE*arch1;
+	arch1=fopen("JETMOTORSG11.dat","r");
+	
+	
+	while ((fread (&vehi, sizeof(vehi),1,arch1)==1)){
+		if ((strcmp(vehi.color,colorbus1)==0)&&vehi.ngarant>=2){
+			
+			printf("\nModelo del vehiculo: %s",vehi.modelo);
+			
+			for (int i = 0 ; i < vehi.ngarant; i++){
+			cout<<"\nConcepto de la garantia #"<<i+1<<": " <<vehi.g[i].concepto;
+			cout<<"\nPorcentaje de la garantia #"<<i+1<<": " <<vehi.g[i].cobertura<<"%";
+			}
+			
+			printf("\nDesea el precio expresado en USD?(SI/NO):");gets(rial);
+			
+			if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
+			conversor(vehi.precio);
+			
+			}else{
+			printf("\nPrecio del vehiculo: %.2f Bs.\n ",vehi.precio);
+			}
+			
+			}
+				++band;
+			} if(band==0){
+	   	cout<<"No se encontraron vehiculos del color indicado y con mas de dos garantias"<<endl;
+							}	
+	fclose(arch1);
+}
 
 
 void incluir(){
@@ -227,7 +392,7 @@ fflush(stdin);
 
 do{
 	fflush(stdin);
-	printf("Ingrese el precio del vehiculo: ");scanf("%.2f",&vehi.precio);
+	printf("Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
 	fflush(stdin);
 	
 	if (vehi.precio<0){
@@ -258,6 +423,8 @@ if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
 	printf("El vehiculo no posee garantia");//validacion de garantia
 	vehi.ngarant=0;
 }
+
+
 
 
 FILE *arch1;
@@ -293,7 +460,7 @@ char serialcomp[20]; //una variable para comparar la serial ingresada con las se
 		cout<<"\nModelo del vehiculo: "<< vehi.modelo;
 		cout<<"\nColor de vehiculo: "<< vehi.color;
 		fflush(stdin);
-		printf("\nPrecio del vehiculo:%f",vehi.precio);
+		printf("\nPrecio del vehiculo:%.2f Bs.",vehi.precio);
 		cout<<"\nFecha de fabriacion del vehiculo ";
 		cout<<"\nDia de fabricacion: "<< vehi.ffab.dia;
 		cout<<"\nMes de fabriacion: "<< vehi.ffab.mes;
@@ -317,8 +484,6 @@ char serialcomp[20]; //una variable para comparar la serial ingresada con las se
 	}
 	getche();
 };
-
-
 
 
 void modificar(){
@@ -397,7 +562,7 @@ fflush(stdin);
 
 do{
 	fflush(stdin);
-	printf("Ingrese el precio del vehiculo: ");scanf("%.2f",&vehi.precio);
+	printf("Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
 	fflush(stdin);
 	
 	if (vehi.precio<0){
@@ -445,7 +610,6 @@ getche();
 };
 
 
-
 void eliminar(){
 	fflush(stdin);
 	int m,i; system("CLS");
@@ -479,7 +643,103 @@ void eliminar(){
 };
 
 
-void reportes();
+//lista
+void modeloporperiodo(struct vehiculo vehi){	
+fflush(stdin);
+system("CLS");
+char modbus[20];
+	
+fflush(stdin);	
+printf("Ingrese el modelo del vehiculo:");gets(modbus);
+
+busqueda2(modbus);
+
+	getche();
+};
+
+
+
+void totalpormarca(struct vehiculo vehi){
+	fflush(stdin);system("CLS");
+	int band=0,i;
+	FILE*arch1;
+	float totalmarca,totalgral;
+	struct vehiculo arre;
+	
+	arch1=fopen("JETMOTORSG11.dat","r");
+	
+	
+	
+	while((band==0)&&(fread(&vehi,sizeof(vehi),1,arch1)==1)){
+		
+	
+		
+		fflush(stdin);
+		printf("\nSerial del vehiculo:%s",vehi.serial);
+		printf("\nModelo del vehiculo:%s",vehi.modelo);
+		printf("\nMarca del vehiculo:%s",vehi.marca);
+		cout<<"\nFecha de fabriacion del vehiculo ";
+		cout<<"\nDia de fabricacion: "<< vehi.ffab.dia;
+		cout<<"\nMes de fabriacion: "<< vehi.ffab.mes;
+		cout<<"\nAnio de fabriacion: "<< vehi.ffab.anio;
+		printf("\nPrecio del vehiculo:%.2f Bs.",vehi.precio);
+		printf("\nColor del vehiculo:%s\n",vehi.color);
+		fflush(stdin);
+		
+	}
+	
+	getche();
+};
+
+
+//lista
+void coberturacolor(struct vehiculo vehi){
+	fflush(stdin);system("CLS");
+	int m;
+	char color[20];
+	
+	printf("Ingrese el color que desea buscar:");gets(color);
+	
+	busqueda3(color);
+	
+	getche();
+};
+
+
+
+void consultaporgrantia();
+
+
+
+
+
+
+
+void reportes(){
+	fflush(stdin);system("CLS");
+	do{
+sel = submenu();
+switch (sel){ 
+
+case '1': modeloporperiodo(vehi);
+break; 
+
+case '2': totalpormarca(vehi);
+break; 
+
+case '3': coberturacolor(vehi);
+break; 
+/*
+case '4': consultaporgrantia();
+break; */
+	
+
+}
+
+} while (sel != '5');
+
+
+};
 
 
 
@@ -503,9 +763,9 @@ break;
 
 case '4': eliminar();
 break; 
-/*
+
 case '5': reportes();
-break; */
+break; 
 }
 
 } while (sel != '6');
