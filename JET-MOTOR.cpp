@@ -706,8 +706,66 @@ void coberturacolor(struct vehiculo vehi){
 };
 
 
+//función que muestre una consulta del vehículo que posee el monto más alto
+//por concepto de cobertura ingresado por el usuario.
+void consultaporgrantia() {
+    fflush(stdin);
+    system("CLS");
 
-void consultaporgrantia();
+    char conceptobus[20];
+    float maxCobertura = 0.0;
+    bool found = false;
+    struct vehiculo vehiMaxCobertura;
+
+    // Solicitud al usuario para ingresar la garantía que buscamos.
+    printf("Ingrese el concepto de la garantia que desea buscar: ");
+    gets(conceptobus);
+
+    // Abrimos el archivo en formato "Solo lectura o "read".
+    FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
+
+    // Revisamos si el archivo se pudo abrir apropiadamente ,':c
+    if (arch1 == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        getch();
+        return;
+    }
+
+    // Hacemos un ciclo entre cada vehiculo guardado.
+    while (fread(&vehi, sizeof(vehi), 1, arch1) == 1) {
+        // Ciclo entre cada una de las garantías guardadas.
+        for (int i = 0; i < vehi.ngarant; i++) {
+            if (strcmp(vehi.g[i].concepto, conceptobus) == 0) {
+                if (vehi.g[i].cobertura > maxCobertura) {
+                    maxCobertura = vehi.g[i].cobertura;
+                    vehiMaxCobertura = vehi;
+                    found = true;
+                }
+            }
+        }
+    }
+
+    // Cerramos el archivo ;D
+    fclose(arch1);
+
+    // Mostrando resultlados.
+    if (found) {
+        printf("\nVehiculo con mayor cobertura por concepto \"%s\":\n", conceptobus);
+        printf("Serial del vehiculo: %s\n", vehiMaxCobertura.serial);
+        printf("Marca del vehiculo: %s\n", vehiMaxCobertura.marca);
+        printf("Modelo del vehiculo: %s\n", vehiMaxCobertura.modelo);
+        printf("Color del vehiculo: %s\n", vehiMaxCobertura.color);
+        printf("Fecha de fabricacion: %02d/%02d/%04d\n", vehiMaxCobertura.ffab.dia, vehiMaxCobertura.ffab.mes, vehiMaxCobertura.ffab.anio);
+        printf("Fecha de entrada al inventario: %02d/%02d/%04d\n", vehiMaxCobertura.fent.dia, vehiMaxCobertura.fent.mes, vehiMaxCobertura.fent.anio);
+        printf("Precio del vehiculo: %.2f Bs.\n", vehiMaxCobertura.precio);
+        printf("Cobertura: %.2f%%\n", maxCobertura);
+    } else {
+        printf("No se encontraron vehiculos con el concepto de garantia \"%s\".\n", conceptobus);
+    }
+
+    getche();
+}
+
 
 
 
@@ -729,9 +787,9 @@ break;
 
 case '3': coberturacolor(vehi);
 break; 
-/*
+
 case '4': consultaporgrantia();
-break; */
+break;
 	
 
 }
