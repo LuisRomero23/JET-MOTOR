@@ -713,64 +713,92 @@ void consultaporgrantia() {
     system("CLS");
 
     char conceptobus[20];
-    float maxCobertura = 0.0;
+    float maxMonto = 0.0;
     bool found = false;
-    struct vehiculo vehiMaxCobertura;
+    struct vehiculo vehiMaxMonto;
 
-    // Solicitud al usuario para ingresar la garantía que buscamos.
+    // Pregunta al usuario para ingresar el concepto de la garantia.
     printf("Ingrese el concepto de la garantia que desea buscar: ");
     gets(conceptobus);
 
-    // Abrimos el archivo en formato "Solo lectura o "read".
-    FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
-
-    // Revisamos si el archivo se pudo abrir apropiadamente ,':c
-    if (arch1 == NULL) {
-        printf("No se pudo abrir el archivo.\n");
-        getch();
-        return;
+    // Convierte el concepto a minúsculas para evitar problemas relacionados a letras mayusculas y minúsculas durante la busqueda.
+    for (int i = 0; conceptobus[i]; i++) {
+        conceptobus[i] = tolower(conceptobus[i]);
     }
 
-    // Hacemos un ciclo entre cada vehiculo guardado.
+    // Abre el archivo en formato solo lectura "read".
+    FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
+
+    // Validación de una apertura correcta del archivo.
+    if (arch1 == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        getch ();
+		return;
+    }
+
+    // Ciclo while entre todos los vehiculos guardados.
     while (fread(&vehi, sizeof(vehi), 1, arch1) == 1) {
-        // Ciclo entre cada una de las garantías guardadas.
+        // Ciclo for para cada garantía.
         for (int i = 0; i < vehi.ngarant; i++) {
-            if (strcmp(vehi.g[i].concepto, conceptobus) == 0) {
-                if (vehi.g[i].cobertura > maxCobertura) {
-                    maxCobertura = vehi.g[i].cobertura;
-                    vehiMaxCobertura = vehi;
+            char conceptolower[20];
+            strcpy(conceptolower, vehi.g[i].concepto);
+            // Convierte a minúsculas el concepto de garantía.
+            for (int j = 0; conceptolower[j]; j++) {
+                conceptolower[j] = tolower(conceptolower[j]);
+            }
+            if (strcmp(conceptolower, conceptobus) == 0) {
+                float monto = vehi.g[i].cobertura * vehi.precio / 100;
+                if (monto > maxMonto) {
+                    maxMonto = monto;
+                    vehiMaxMonto = vehi;
                     found = true;
                 }
             }
         }
     }
 
-    // Cerramos el archivo ;D
+    // Cierra el archivo.
     fclose(arch1);
 
-    // Mostrando resultlados.
+    // Preguntamos al usuario si desea su monton en Bs. ó en USD.
+    char currency[4];
+    float tasa = 0.0;
+
+    printf("Desea el monto en Bs. o USD? (Bs/USD): ");
+    gets(currency);
+
+    // Convertimos la opción de la función currency a minúscula para evitar problemas.
+    for (int i = 0; currency[i]; i++) {
+        currency[i] = tolower(currency[i]);
+    }
+
+    if (strcmp(currency, "usd") == 0) {
+        printf("Ingrese la tasa de conversion (Bs. -> $): ");
+        scanf("%f", &tasa);
+        maxMonto /= tasa;
+    }
+
+    // Mostrar resultados finales.
     if (found) {
-        printf("\nVehiculo con mayor cobertura por concepto \"%s\":\n", conceptobus);
-        printf("Serial del vehiculo: %s\n", vehiMaxCobertura.serial);
-        printf("Marca del vehiculo: %s\n", vehiMaxCobertura.marca);
-        printf("Modelo del vehiculo: %s\n", vehiMaxCobertura.modelo);
-        printf("Color del vehiculo: %s\n", vehiMaxCobertura.color);
-        printf("Fecha de fabricacion: %02d/%02d/%04d\n", vehiMaxCobertura.ffab.dia, vehiMaxCobertura.ffab.mes, vehiMaxCobertura.ffab.anio);
-        printf("Fecha de entrada al inventario: %02d/%02d/%04d\n", vehiMaxCobertura.fent.dia, vehiMaxCobertura.fent.mes, vehiMaxCobertura.fent.anio);
-        printf("Precio del vehiculo: %.2f Bs.\n", vehiMaxCobertura.precio);
-        printf("Cobertura: %.2f%%\n", maxCobertura);
+        printf("\nVehiculo con mayor monto por cobertura \"%s\":\n", conceptobus);
+        printf("Serial del vehiculo: %s\n", vehiMaxMonto.serial);
+        printf("Marca del vehiculo: %s\n", vehiMaxMonto.marca);
+        printf("Modelo del vehiculo: %s\n", vehiMaxMonto.modelo);
+        printf("Color del vehiculo: %s\n", vehiMaxMonto.color);
+        printf("Fecha de fabricacion: %02d/%02d/%04d\n", vehiMaxMonto.ffab.dia, vehiMaxMonto.ffab.mes, vehiMaxMonto.ffab.anio);
+        printf("Fecha de entrada al inventario: %02d/%02d/%04d\n", vehiMaxMonto.fent.dia, vehiMaxMonto.fent.mes, vehiMaxMonto.fent.anio);
+        printf("Precio del vehiculo: %.2f Bs.\n", vehiMaxMonto.precio);
+        if (strcmp(currency, "usd") == 0) {
+            printf("Monto de cobertura: %.2f USD\n", maxMonto);
+        } else {
+            printf("Monto de cobertura: %.2f Bs.\n", maxMonto);
+        }
     } else {
         printf("No se encontraron vehiculos con el concepto de garantia \"%s\".\n", conceptobus);
     }
 
     getche();
 }
-
-
-
-
-
-
 
 
 void reportes(){
