@@ -622,7 +622,7 @@ void eliminar(){
 	char serialbus[20];
 	
 	gotoxy(35,5);cout<<"========================================================="<<endl;
-	gotoxy(40,6);printf("Ingrese el serial del vehiculo que desea eliminar:");gets(serialbus);
+	gotoxy(40,6);printf("Ingrese el serial del vehiculo que desea eliminar: ");gets(serialbus);
 	
 	m=busqueda(serialbus);
 	
@@ -680,10 +680,10 @@ void totalpormarca(struct vehiculo vehi){
 	
 	arch1=fopen("JETMOTORSG11.dat","r");
 	
-	printf("Desea mostrar los totales en dolares USD?(SI/NO)");
+	printf("Desea mostrar los totales en dolares USD?(SI/NO): ");
 	gets(posee);
 	if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
-		printf("Ingrese la tasa de cambio:");scanf("%f",&tasa);
+		printf("Ingrese la tasa de cambio: ");scanf("%f",&tasa);
 		fflush(stdin);
 	
 	}
@@ -771,7 +771,7 @@ void coberturacolor(struct vehiculo vehi){
 	int m;
 	char color[20];
 		gotoxy(35,5);cout<<"========================================================="<<endl;
-		gotoxy(40,6);printf("Ingrese el color que desea buscar:");gets(color);
+		gotoxy(40,6);printf("Ingrese el color que desea buscar: ");gets(color);
 	
 	busqueda3(color);
 	
