@@ -106,6 +106,18 @@ bool validarfecha(int dia, int mes, int anio){
     return true;
 }
 
+void barra()
+{
+ int segundo=2, i;
+ gotoxy(50,25);printf("====== CARGANDO ===== \n");
+ 
+ gotoxy(4,26);
+  for(i=0; i<=112; i++)
+ {
+  printf("|");
+  Sleep(segundo*1000/80);
+ }
+}
 
 char sel;
 
@@ -143,17 +155,20 @@ return (y); }
 void conversor(float total){
 	float tasa,endolar;
 	
-	printf("					Ingrese la tasa de conversion (Bs.-> $)");
+	printf("Ingrese la tasa de conversion (Bs.-> $)");
 	scanf("%f",&tasa);
 	
 	endolar=total/tasa;
 	
-	printf("					El valor en USD es %.2f $",endolar);
+	printf("El valor en USD es %.2f $",endolar);
 	
 }
 
 //el submenu para la funcion de reportes 
 char submenu(){
+	system("CLS");
+	barra();
+	system("CLS");
 	char y; system("CLS");
 
 gotoxy(40,6);printf("Sub-Menu");
@@ -177,6 +192,9 @@ return (y);
 
 //busqueda por serial
 int busqueda(char serialbus1[20]){
+	system("CLS");
+	barra();
+	system("CLS");
 	int band=0;
 	int z;
 	FILE*arch1;
@@ -198,6 +216,9 @@ int busqueda(char serialbus1[20]){
 
 //busqueda por modelo, primera funcion de la opcion reportes
 void busqueda2(char modbus1[20]){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);	
 	int band=0;
 	struct fecha f1,f2;
@@ -211,36 +232,36 @@ void busqueda2(char modbus1[20]){
 	
 	
 do{
-	printf("					Ingrese el rango de fechas en el que desea buscar\n");
-	printf("					Ingrese la primera fecha\n");
-	printf("					Dia: ");cin>>f1.dia;
-	printf("					Mes: ");cin>>f1.mes;
-	printf("					Ano: ");cin>>f1.anio;
+	printf("Ingrese el rango de fechas en el que desea buscar\n");
+	printf("Ingrese la primera fecha\n");
+	printf("Dia: ");cin>>f1.dia;
+	printf("Mes: ");cin>>f1.mes;
+	printf("Ano: ");cin>>f1.anio;
 
 	fechavalida1=validarfecha(f1.dia,f1.mes,f1.anio);
 	if(!fechavalida1){
-		printf("					Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 					}	
 }while(!fechavalida1);
 
 fflush(stdin);
 
 do{
-	printf("					Ingrese la segunda fecha: \n");
-	printf("					Dia: ");cin>>f2.dia;
-	printf("					Mes: ");cin>>f2.mes;
-	printf("					Ano: ");cin>>f2.anio;
+	printf("Ingrese la segunda fecha: \n");
+	printf("Dia: ");cin>>f2.dia;
+	printf("Mes: ");cin>>f2.mes;
+	printf("Ano: ");cin>>f2.anio;
 
 	fechavalida2=validarfecha(f2.dia,f2.mes,f2.anio);
 	if(!fechavalida2){
-		printf("					Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 					}else 
 	convertirADias(f1);convertirADias(f2);
 	diasfecha1=convertirADias(f1);
 	diasfecha2=convertirADias(f2);
 	
 	if(diasfecha2<diasfecha1){
-		printf("					Rango de fechas invalido, intente nuevamente\n");
+		printf("Rango de fechas invalido, intente nuevamente\n");
 							}		
 }while(!fechavalida2||diasfecha2<diasfecha1);
 	
@@ -250,14 +271,14 @@ fflush(stdin);
 		if(strcmp(vehi.modelo,modbus1)==0){
 			if(convertirADias(vehi.fent)>diasfecha1&&convertirADias(vehi.fent)<diasfecha2){
 				
-				cout<<"\n					Serial: " << vehi.serial <<"\n";
-				cout<<"					Marca del vehiculo: "<< vehi.marca;
-				cout<<"\n					Fecha de entrada del vehiculo al inventario "; 
-				cout<<"\n					Dia de entrada: "<< vehi.fent.dia;
-				cout<<"\n					Mes de entrada: "<< vehi.fent.mes;
-				cout<<"\n					Anio de entrada: "<< vehi.fent.anio;
+				cout<<"\nSerial " << vehi.serial <<":\n";
+				cout<<"Marca del vehiculo: "<< vehi.marca;
+				cout<<"\nFecha de entrada del vehiculo al inventario "; 
+				cout<<"\nDia de entrada: "<< vehi.fent.dia;
+				cout<<"\nMes de entrada: "<< vehi.fent.mes;
+				cout<<"\nAnio de entrada: "<< vehi.fent.anio;
 				//opcion para mostrar precio en verdes 
-				printf("\n					Precio del vehiculo:%.2f Bs.\n",vehi.precio);
+				printf("\nPrecio del vehiculo:%.2f Bs.\n",vehi.precio);
 				//funcion para mostrar el precio en verdes 	;
 				total+=vehi.precio;
 				
@@ -265,15 +286,15 @@ fflush(stdin);
 		}
 	}
 	if(total==0){
-		printf("					No se encontro este modelo, intente nuevamente");
+		printf("No se encontro este modelo, intente nuevamente");
 	}else{
 		fflush(stdin);			
-	printf("					Desea su total expresado en USD?(SI/NO.):");gets(rial);
+	printf("Desea su total expresado en USD?(SI/NO.):");gets(rial);
 
 if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
 	conversor(total);
 }else{
-	printf("					El total acumulado es %.2f Bs.",total);
+	printf("El total acumulado es %.2f Bs.",total);
 }
 	}
 
@@ -283,6 +304,9 @@ if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
 
 //busqueda por color,tercera funcion de la opcion reportes
 void busqueda3 ( char colorbus1[20] ){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);
 	int band=0;
 	int i;
@@ -295,33 +319,35 @@ void busqueda3 ( char colorbus1[20] ){
 	while ((fread (&vehi, sizeof(vehi),1,arch1)==1)){
 		if ((strcmp(vehi.color,colorbus1)==0)&&vehi.ngarant>=2){
 			
-			printf("\n					Modelo del vehiculo: %s",vehi.modelo);
+			printf("\nModelo del vehiculo: %s",vehi.modelo);
 			
 			for (int i = 0 ; i < vehi.ngarant; i++){
-			cout<<"\n					Concepto de la garantia #"<<i+1<<": " <<vehi.g[i].concepto;
-			cout<<"\n					Porcentaje de la garantia #"<<i+1<<": " <<vehi.g[i].cobertura<<"%";
+			cout<<"\nConcepto de la garantia #"<<i+1<<": " <<vehi.g[i].concepto;
+			cout<<"\nPorcentaje de la garantia #"<<i+1<<": " <<vehi.g[i].cobertura<<"%";
 			}
 			
-			printf("\n					Desea el precio expresado en USD?(SI/NO):");gets(rial);
+			printf("\nDesea el precio expresado en USD?(SI/NO):");gets(rial);
 			
 			if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
 			conversor(vehi.precio);
 			
 			}else{
-			printf("\n					Precio del vehiculo: %.2f Bs.\n ",vehi.precio);
+			printf("\nPrecio del vehiculo: %.2f Bs.\n ",vehi.precio);
 			}
 			
 			}
 				++band;
 			} if(band==0){
-	   	cout<<"					No se encontraron vehiculos del color indicado y con mas de dos garantias"<<endl;
+	   	cout<<"No se encontraron vehiculos del color indicado y con mas de dos garantias"<<endl;
 							}	
 	fclose(arch1);
 }
 
 
 void incluir(){
-fflush(stdin);	
+	system("CLS");
+	barra();
+	system("CLS");
 char serialbus[20];
 bool fechavalida1, fechavalida2;
 
@@ -329,26 +355,26 @@ int m,i,diasfecha1,diasfecha2; system("CLS");
 char posee[2];
 
 fflush(stdin);
-gotoxy(35,5);cout<<"========================================================="<<endl;
-gotoxy(40,6);printf("Ingrese el serial del vehiculo: ");gets(serialbus);
+printf("NO DEJE ESPACIO AL FINAL DE LOS DATOS\n");
+printf("Ingrese el serial del vehiculo: ");gets(serialbus);
 
 m = busqueda(serialbus);
 
 if (m==0) {
 strcpy(vehi.serial,serialbus);
 
-printf("					Ingrese la marca del vehiculo: "); gets(vehi.marca);
+printf("Ingrese la marca del vehiculo: "); gets(vehi.marca);
 
-printf("					Ingrese el modelo del vehiculo: ");gets(vehi.modelo);
+printf("Ingrese el modelo del vehiculo: ");gets(vehi.modelo);
 do{
-	printf("					Ingrese la fecha de fabricacion del vehiculo\n");
-	/*gotoxy(0,4);*/printf("					Dia: ");cin>>vehi.ffab.dia;
-	/*gotoxy(10,4);*/printf("					Mes: ");cin>>vehi.ffab.mes;
-	/*gotoxy(20,4);*/printf("					Ano: ");cin>>vehi.ffab.anio;
+	printf("Ingrese la fecha de fabricacion del vehiculo\n");
+	/*gotoxy(0,4);*/printf("Dia: ");cin>>vehi.ffab.dia;
+	/*gotoxy(10,4);*/printf("Mes: ");cin>>vehi.ffab.mes;
+	/*gotoxy(20,4);*/printf("Ano: ");cin>>vehi.ffab.anio;
 
 	fechavalida1=validarfecha(vehi.ffab.dia,vehi.ffab.mes,vehi.ffab.anio);
 	if(!fechavalida1){
-		printf("				Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 	}
 	
 }while(!fechavalida1);
@@ -357,14 +383,14 @@ fflush(stdin);
 
 
 do{
-	printf("					Ingrese la fecha de entrada al inventario\n");
-	/*gotoxy(0,6);*/printf("					Dia: ");cin>>vehi.fent.dia;
-	/*gotoxy(10,6);*/printf("					Mes: ");cin>>vehi.fent.mes;
-	/*gotoxy(20,6);*/printf("					Ano: ");cin>>vehi.fent.anio;
+	printf("Ingrese la fecha de entrada al inventario\n");
+	/*gotoxy(0,6);*/printf("Dia: ");cin>>vehi.fent.dia;
+	/*gotoxy(10,6);*/printf("Mes: ");cin>>vehi.fent.mes;
+	/*gotoxy(20,6);*/printf("Ano: ");cin>>vehi.fent.anio;
 
 	fechavalida2=validarfecha(vehi.fent.dia,vehi.fent.mes,vehi.fent.anio);
 	if(!fechavalida2){
-		printf("					Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 	}else 
 	convertirADias(vehi.ffab);convertirADias(vehi.fent);
 	
@@ -372,7 +398,7 @@ do{
 	diasfecha2=convertirADias(vehi.fent);
 	
 	if(diasfecha2<diasfecha1){
-		printf("					Fecha de entrada al inventario invalida, intente nuevamente\n");
+		printf("Fecha de entrada al inventario invalida, intente nuevamente\n");
 	}
 		
 }while(!fechavalida2||diasfecha2<diasfecha1);
@@ -380,44 +406,42 @@ do{
 
 fflush(stdin);
 
-printf("					Ingrese el color del vehiculo: ");gets(vehi.color);
+printf("Ingrese el color del vehiculo: ");gets(vehi.color);
 fflush(stdin);
 
 do{
 	fflush(stdin);
-	printf("					Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
+	printf("Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
 	fflush(stdin);
 	
 	if (vehi.precio<0){
-	printf("					Precio invalido, intente nuevamente");
+	printf("Precio invalido, intente nuevamente");
 	}
 
 }while(vehi.precio<0);//validacion de precio
 
 
-printf("					El vehiculo posee garantia?(SI/NO):");gets(posee);
+printf("El vehiculo posee garantia?(SI/NO):");gets(posee);
 
 if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
 	fflush(stdin);
-	printf("					Ingrese el numero de garantias: ");cin>>vehi.ngarant;
+	printf("Ingrese el numero de garantias: ");cin>>vehi.ngarant;
 	
 	if (vehi.ngarant<0||vehi.ngarant>3){
-		printf("					Error numero de grarantias invalido, intente nuevamente: ");
-			fflush(stdin);
+		printf("Error numero de grarantias invalido, intente nuevamente: ");	
 	}else
 
 	for(i=0;i<vehi.ngarant;i++){
-		printf("					Ingrese los datos de la garantia #%d\n",i+1);
+		printf("Ingrese los datos de la garantia #%d\n",i+1);
 		fflush(stdin);
-		printf("					Concepto de la garantia #%d: ",i+1);gets(vehi.g[i].concepto);
+		printf("Concepto de la garantia #%d: ",i+1);gets(vehi.g[i].concepto);
 		fflush(stdin);
-		printf("					Ingrese el porcentaje cubierto por la garantia #%d: ",i+1);scanf("%f",&vehi.g[i].cobertura);
+		printf("Ingrese el porcentaje cubierto por la garantia #%d: ",i+1);scanf("%f",&vehi.g[i].cobertura);
 	}
 
-}else {
-	printf("					El vehiculo no posee garantia");//validacion de garantia
+}else if(strcmp(posee,"No")==0||strcmp(posee,"no")==0||strcmp(posee,"No")==0){
+	printf("El vehiculo no posee garantia");//validacion de garantia
 	vehi.ngarant=0;
-	fflush(stdin);
 }
 
 
@@ -429,73 +453,71 @@ fwrite(&vehi,sizeof(vehi),1,arch1);
 
 fclose(arch1);
 
-printf("\n					Registro Insertado\n");
-cout<<"      				   ========================================================="<<endl;
-fflush(stdin);
-}else{
-fflush(stdin);
-printf("\n					Serial Ya Ingresado\n");
-cout<<"      				   ========================================================="<<endl;
-}
+printf("\n Registro Insertado");
 
+}else
+printf("\n Serial Ya Ingresado");
 getch();
-
 };
 
 
 void consultar(){
-	fflush(stdin);system("CLS"); //system("CLS") es clean screen, para quitar todo de la pantalla
-	int m,i; 
-	char serialcomp[20]; //una variable para comparar la serial ingresada con las seriales en los registros
+	system("CLS");
+	barra();
+	system("CLS");
+	fflush(stdin);
+int m,i; system("CLS"); //system("CLS") es clean screen, para quitar todo de la pantalla
 
+fflush(stdin);
 
-gotoxy(35,5);cout<<"========================================================="<<endl;
-gotoxy(40,6);cout<<"Ingrese el serial del vehiculo: "; gets(serialcomp);
+char serialcomp[20]; //una variable para comparar la serial ingresada con las seriales en los registros
+	cout<<"Ingrese el serial del vehiculo: "; gets(serialcomp);
 	
 	m= busqueda(serialcomp);
 	
 	if(m==1){ //if que busca si ambas seriales son iguales y muestre sus datos 
-		cout<<"\n					Datos adjuntados del serial " << serialcomp <<":\n";
-		cout<<"\n					Marca del vehiculo: "<< vehi.marca;
-		cout<<"\n					Modelo del vehiculo: "<< vehi.modelo;
-		cout<<"\n					Color de vehiculo: "<< vehi.color;
-		printf("\n					Precio del vehiculo:%.2f Bs.",vehi.precio);
-		cout<<"\n					Fecha de fabriacion del vehiculo ";
-		cout<<"\n					Dia de fabricacion: "<< vehi.ffab.dia;
-		cout<<"\n					Mes de fabriacion: "<< vehi.ffab.mes;
-		cout<<"\n					Anio de fabriacion: "<< vehi.ffab.anio;
-		cout<<"\n					Fecha de entrada del vehiculo al inventario "; 
-		cout<<"\n					Dia de entrada: "<< vehi.fent.dia;
-		cout<<"\n					Mes de entrada: "<< vehi.fent.mes;
-		cout<<"\n					Anio de entrada: "<< vehi.fent.anio;
-		cout<<"\n					Numero de garantias: "<<vehi.ngarant;
+		cout<<"\nDatos adjuntados del serial " << serialcomp <<":\n";
+		cout<<"\nMarca del vehiculo: "<< vehi.marca;
+		cout<<"\nModelo del vehiculo: "<< vehi.modelo;
+		cout<<"\nColor de vehiculo: "<< vehi.color;
+		fflush(stdin);
+		printf("\nPrecio del vehiculo:%.2f Bs.",vehi.precio);
+		cout<<"\nFecha de fabriacion del vehiculo ";
+		cout<<"\nDia de fabricacion: "<< vehi.ffab.dia;
+		cout<<"\nMes de fabriacion: "<< vehi.ffab.mes;
+		cout<<"\nAnio de fabriacion: "<< vehi.ffab.anio;
+		cout<<"\nFecha de entrada del vehiculo al inventario "; 
+		cout<<"\nDia de entrada: "<< vehi.fent.dia;
+		cout<<"\nMes de entrada: "<< vehi.fent.mes;
+		cout<<"\nAnio de entrada: "<< vehi.fent.anio;
+		cout<<"\nNumero de garantias: "<<vehi.ngarant;
 		
 		if (vehi.ngarant <=0){ //if para validar si tiene garantias o no, si no tiene, no se muestra la info de las garantias
-			cout<<"\n					El vehiculo no posee garantias\n";
+			cout<<"\nEl vehiculo no posee garantias";
 		} else {
 		for (int i = 0 ; i < vehi.ngarant ; i++){
-			cout<<"\n					Concepto de la garantia #"<<i+1<<": " <<vehi.g[i].concepto;
-			cout<<"\n					Porcentaje de la garantia #"<<i+1<<": " <<vehi.g[i].cobertura<<"%"<<endl;
+			cout<<"\nConcepto de la garantia #"<<i+1<<": " <<vehi.g[i].concepto;
+			cout<<"\nPorcentaje de la garantia #"<<i+1<<": " <<vehi.g[i].cobertura<<"%";
 			}
-		}fflush(stdin);
-		cout<<"      				   ========================================================="<<endl;
-	} 
-	else {
-		cout<<"\n					No se encontro el vehiculo con este serial.";
-		cout<<"      				   ========================================================="<<endl;
+		}
+	} else {
+		cout<<"\nNo se encontro el vehiculo con este serial.";
 	}
 	getche();
 };
 
 
 void modificar(){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);
 	bool fechavalida1, fechavalida2;
 	char serialbus[20],posee[2];
 	int m,i,diasfecha1,diasfecha2; system("CLS");
 	
-	gotoxy(35,5);cout<<"========================================================="<<endl;
-	gotoxy(40,6);printf("Ingrese el serial del vehiculo que desea modificar:");
+	
+	printf("Ingrese el serial del vehiculo que desea modificar:");
 	fflush(stdin);
 	gets(serialbus);
 	
@@ -512,21 +534,21 @@ if(m==1){
 		
 	if(strcmp(vehi.serial,serialbus)==0){
 			
-	printf("					Ingrese la marca del vehiculo:"); gets(vehi.marca);
+	printf("Ingrese la marca del vehiculo:"); gets(vehi.marca);
 
-	printf("					Ingrese el modelo del vehiculo:");gets(vehi.modelo);
+	printf("Ingrese el modelo del vehiculo:");gets(vehi.modelo);
 
 
 
 do{
-	printf("					Ingrese la fecha de fabricacion del vehiculo:\n");
-	/*gotoxy(0,4);*/printf("					Dia:");cin>>vehi.ffab.dia;
-	/*gotoxy(10,4);*/printf("					Mes:");cin>>vehi.ffab.mes;
-	/*gotoxy(20,4);*/printf("					Ano:");cin>>vehi.ffab.anio;
+	printf("Ingrese la fecha de fabricacion del vehiculo:\n");
+	/*gotoxy(0,4);*/printf("Dia:");cin>>vehi.ffab.dia;
+	/*gotoxy(10,4);*/printf("Mes:");cin>>vehi.ffab.mes;
+	/*gotoxy(20,4);*/printf("Ano:");cin>>vehi.ffab.anio;
 
 	fechavalida1=validarfecha(vehi.ffab.dia,vehi.ffab.mes,vehi.ffab.anio);
 	if(!fechavalida1){
-		printf("					Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 	}
 	
 }while(!fechavalida1);
@@ -535,14 +557,14 @@ fflush(stdin);
 
 
 do{
-	printf("					Ingrese la fecha de entrada al inventario:\n");
-	/*gotoxy(0,6);*/printf("					Dia:");cin>>vehi.fent.dia;
-	/*gotoxy(10,6);*/printf("					Mes:");cin>>vehi.fent.mes;
-	/*gotoxy(20,6);*/printf("					Ano:");cin>>vehi.fent.anio;
+	printf("Ingrese la fecha de entrada al inventario:\n");
+	/*gotoxy(0,6);*/printf("Dia:");cin>>vehi.fent.dia;
+	/*gotoxy(10,6);*/printf("Mes:");cin>>vehi.fent.mes;
+	/*gotoxy(20,6);*/printf("Ano:");cin>>vehi.fent.anio;
 
 	fechavalida2=validarfecha(vehi.fent.dia,vehi.fent.mes,vehi.fent.anio);
 	if(!fechavalida2){
-		printf("					Fecha invalida, intente nuevamente\n");
+		printf("Fecha invalida, intente nuevamente\n");
 	}else 
 	convertirADias(vehi.ffab);convertirADias(vehi.fent);
 	
@@ -550,7 +572,7 @@ do{
 	diasfecha2=convertirADias(vehi.fent);
 	
 	if(diasfecha2<diasfecha1){
-		printf("					Fecha de entrada al inventario invalida, intente nuevamente\n");
+		printf("Fecha de entrada al inventario invalida, intente nuevamente\n");
 	}
 	
 	
@@ -559,40 +581,40 @@ do{
 
 
 fflush(stdin);
-printf("					Ingrese el color del vehiculo: ");gets(vehi.color);
+printf("Ingrese el color del vehiculo: ");gets(vehi.color);
 fflush(stdin);
 
 do{
 	fflush(stdin);
-	printf("					Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
+	printf("Ingrese el precio del vehiculo: ");scanf("%f",&vehi.precio);
 	fflush(stdin);
 	
 	if (vehi.precio<0){
-	printf("					Precio invalido, intente nuevamente");
+	printf("Precio invalido, intente nuevamente");
 	}
 
 }while(vehi.precio<0);//validacion de precio
 
 
-printf("					El vehiculo posee garantia?(SI/NO):");gets(posee);
+printf("El vehiculo posee garantia?(SI/NO):");gets(posee);
 
 if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
-	printf("					Ingrese el numero de garantias:");cin>>vehi.ngarant;
+	printf("Ingrese el numero de garantias:");cin>>vehi.ngarant;
 	
 	if (vehi.ngarant<0||vehi.ngarant>3){
-		printf("					Error numero de grarantias invalido, intente nuevamente:");	
+		printf("Error numero de grarantias invalido, intente nuevamente:");	
 	}else
 
 	for(i=0;i<vehi.ngarant;i++){
-		printf("					Ingrese los datos de la grantia #%d\n",i+1);
+		printf("Ingrese los datos de la grantia #%d\n",i+1);
 		fflush(stdin);
-		printf("					Concepto de la garantia #%d:",i+1);gets(vehi.g[i].concepto);
+		printf("Concepto de la garantia #%d:",i+1);gets(vehi.g[i].concepto);
 		fflush(stdin);
-		printf("					Ingrese el porcentaje cubierto por la grantia #%d:",i+1);scanf("%f",&vehi.g[i].cobertura);
+		printf("Ingrese el porcentaje cubierto por la grantia #%d:",i+1);scanf("%f",&vehi.g[i].cobertura);
 	}
 
-}else if(strcmp(posee,"No")==0||strcmp(posee,"no")==0||strcmp(posee,"NO")==0){
-	printf("					El vehiculo no posee garantia\n");//validacion de garantia
+}else if(strcmp(posee,"No")==0||strcmp(posee,"no")==0||strcmp(posee,"No")==0){
+	printf("El vehiculo no posee garantia");//validacion de garantia
 	vehi.ngarant=0;
 }
 				
@@ -604,25 +626,23 @@ if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
 	fclose(arch2);
 	remove("JETMOTORSG11.dat");
 	rename("temp.dat","JETMOTORSG11.dat");
-	
-	
-	printf("\n					Regristro modificado\n");
-	cout<<"      				   ========================================================="<<endl;
+	printf("\nRegristro modificado");
 }else{
-	printf("\n					Serial no encontrado\n");
-	cout<<"      				   ========================================================="<<endl;
+	printf("\nSerial no encontrado");
 };
 getche();
 };
 
 
 void eliminar(){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);
 	int m,i; system("CLS");
 	char serialbus[20];
 	
-	gotoxy(35,5);cout<<"========================================================="<<endl;
-	gotoxy(40,6);printf("Ingrese el serial del vehiculo que desea eliminar:");gets(serialbus);
+	printf("Ingrese el serial del vehiculo:");gets(serialbus);
 	
 	m=busqueda(serialbus);
 	
@@ -641,26 +661,26 @@ void eliminar(){
 	fclose(arch2);
 	remove("JETMOTORSG11.dat");
 	rename("temp.dat","JETMOTORSG11.dat");
-	printf("\n					Registro eliminado\n");
-	cout<<"      				   ========================================================="<<endl;
+	printf("\nRegistro eliminado");
 	}
 	else{
-		printf("\n					Serial no encontrado\n");
-		cout<<"      				   ========================================================="<<endl;
+		printf("\nSerial no encontrado");
 	}
 	getche();
 };
 
 
 //lista
-void modeloporperiodo(struct vehiculo vehi){	
+void modeloporperiodo(struct vehiculo vehi){
+system("CLS");
+barra();
+system("CLS");
 fflush(stdin);
 system("CLS");
 char modbus[20];
 	
 fflush(stdin);	
-	gotoxy(35,5);cout<<"========================================================="<<endl;
-	gotoxy(40,6);printf("Ingrese el modelo del vehiculo:");gets(modbus);
+printf("Ingrese el modelo del vehiculo:");gets(modbus);
 
 busqueda2(modbus);
 
@@ -670,23 +690,17 @@ busqueda2(modbus);
 
 
 void totalpormarca(struct vehiculo vehi){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);system("CLS");
 	int band=0,i;
 	FILE*arch1;
-	float totalmarca = 0, totalgral = 0,tasa;
+	float totalmarca = 0, totalgral = 0;
 	struct vehiculo arre[50];
 	int numreg=0;
-	char posee[2];
 	
 	arch1=fopen("JETMOTORSG11.dat","r");
-	
-	printf("Desea mostrar los totales en dolares USD?(SI/NO)");
-	gets(posee);
-	if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
-		printf("Ingrese la tasa de cambio:");scanf("%f",&tasa);
-		fflush(stdin);
-	
-	}
 	
 	while((band==0)&&(fread(&vehi,sizeof(vehi),1,arch1)==1)){
 			arre[numreg]=vehi;
@@ -717,14 +731,7 @@ void totalpormarca(struct vehiculo vehi){
 			strcpy(marca,arre[i].marca);
 		}
 		if(strcmp(marca,arre[i].marca)!=0){ //if para si encuentra dos marcas diferentes imprime el total por marca que ya encontramos para que continue con el siguiente
-			
-			if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
-				totalmarca=totalmarca/tasa;
-				cout<<endl<<endl<<"							Total de "<<marca<<": "<<totalmarca<<" USD."<<endl;
-			}else{
-				cout<<endl<<endl<<"							Total de "<<marca<<": "<<totalmarca<<" Bs."<<endl;
-			}
-			
+			cout<<endl<<endl<<"							Total de "<<marca<<": "<<totalmarca<<endl;
 			totalmarca=0;
 			strcpy(marca,arre[i].marca);
 		}
@@ -742,23 +749,11 @@ void totalpormarca(struct vehiculo vehi){
 		printf("\n							Precio del vehiculo:%.2f Bs.",arre[i].precio);
 		printf("\n							Color del vehiculo:%s\n",arre[i].color);
 		cout<<"\n				-----------------------------------------------------";
-	}
-	
-		if(strcmp(posee,"Si")==0||strcmp(posee,"si")==0||strcmp(posee,"SI")==0){
-				totalmarca=totalmarca/tasa;
-				totalgral=totalgral/tasa;
-		cout<<endl<<	"							Total de "<<marca<<": "<<totalmarca<<" USD."<<endl; //imprime el total de la ulti a marca
-		cout<<"			====================================================================="<<endl;
-		printf("				 		Total general: %.2f USD.\n",totalgral);
-		cout<<"			======================================================================";
-			}else{
-		cout<<endl<<	"							Total de "<<marca<<": "<<totalmarca<<" Bs."<<endl; //imprime el total de la ulti a marca
-		cout<<"			====================================================================="<<endl;
-		printf("				 		Total general: %.2f Bs.\n",totalgral);
-		cout<<"			======================================================================";
-			}
-		
-		
+	}	
+		cout<<endl<<	"						Total de "<<marca<<": "<<totalmarca<<endl; //imprime el total de la ulti a marca
+		cout<<"====================================================================="<<endl;
+		cout<<endl<<"								Total General: "<<totalgral<<endl;
+		cout<<"======================================================================";
 
 	
 	getche();
@@ -767,11 +762,14 @@ void totalpormarca(struct vehiculo vehi){
 
 //lista
 void coberturacolor(struct vehiculo vehi){
+	system("CLS");
+	barra();
+	system("CLS");
 	fflush(stdin);system("CLS");
 	int m;
 	char color[20];
-		gotoxy(35,5);cout<<"========================================================="<<endl;
-		gotoxy(40,6);printf("Ingrese el color que desea buscar:");gets(color);
+	
+	printf("Ingrese el color que desea buscar:");gets(color);
 	
 	busqueda3(color);
 	
@@ -779,9 +777,11 @@ void coberturacolor(struct vehiculo vehi){
 };
 
 
-//función que muestre una consulta del vehículo que posee el monto más alto
+//funcion que muestre una consulta del vehiculo que posee el monto mas alto
 //por concepto de cobertura ingresado por el usuario.
 void consultaporgrantia() {
+	system("CLS");
+	barra();
     fflush(stdin);
     system("CLS");
 
@@ -794,7 +794,7 @@ void consultaporgrantia() {
     printf("Ingrese el concepto de la garantia que desea buscar: ");
     gets(conceptobus);
 
-    // Convierte el concepto a minúsculas para evitar problemas relacionados a letras mayusculas y minúsculas durante la busqueda.
+    // Convierte el concepto a minusculas para evitar problemas relacionados a letras mayusculas y minusculas durante la busqueda.
     for (int i = 0; conceptobus[i]; i++) {
         conceptobus[i] = tolower(conceptobus[i]);
     }
@@ -802,7 +802,7 @@ void consultaporgrantia() {
     // Abre el archivo en formato solo lectura "read".
     FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
 
-    // Validación de una apertura correcta del archivo.
+    // Validacion de una apertura correcta del archivo.
     if (arch1 == NULL) {
         printf("No se pudo abrir el archivo.\n");
         getch ();
@@ -815,7 +815,7 @@ void consultaporgrantia() {
         for (int i = 0; i < vehi.ngarant; i++) {
             char conceptolower[20];
             strcpy(conceptolower, vehi.g[i].concepto);
-            // Convierte a minúsculas el concepto de garantía.
+            // Convierte a minusculas el concepto de garantia.
             for (int j = 0; conceptolower[j]; j++) {
                 conceptolower[j] = tolower(conceptolower[j]);
             }
@@ -833,14 +833,14 @@ void consultaporgrantia() {
     // Cierra el archivo.
     fclose(arch1);
 
-    // Preguntamos al usuario si desea su monton en Bs. ó en USD.
+    // Preguntamos al usuario si desea su monton en Bs. o en USD.
     char currency[4];
     float tasa = 0.0;
 
     printf("Desea el monto en Bs. o USD? (Bs/USD): ");
     gets(currency);
 
-    // Convertimos la opción de la función currency a minúscula para evitar problemas.
+    // Convertimos la opcion de la funcion currency a minuscula para evitar problemas.
     for (int i = 0; currency[i]; i++) {
         currency[i] = tolower(currency[i]);
     }
@@ -898,6 +898,7 @@ break;
 };
 
 int main(){
+	barra();
 struct vehiculo vehi;
 do{
 sel = menu();
