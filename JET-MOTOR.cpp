@@ -106,18 +106,6 @@ bool validarfecha(int dia, int mes, int anio){
     return true;
 }
 
-void barra()
-{
- int segundo=2, i;
- gotoxy(50,25);printf("====== CARGANDO ===== \n");
- 
- gotoxy(4,26);
-  for(i=0; i<=112; i++)
- {
-  printf("|");
-  Sleep(segundo*1000/80);
- }
-}
 
 char sel;
 
@@ -166,9 +154,6 @@ void conversor(float total){
 
 //el submenu para la funcion de reportes 
 char submenu(){
-	system("CLS");
-	barra();
-	system("CLS");
 	char y; system("CLS");
 
 gotoxy(40,6);printf("Sub-Menu");
@@ -192,9 +177,6 @@ return (y);
 
 //busqueda por serial
 int busqueda(char serialbus1[20]){
-	system("CLS");
-	barra();
-	system("CLS");
 	int band=0;
 	int z;
 	FILE*arch1;
@@ -216,9 +198,6 @@ int busqueda(char serialbus1[20]){
 
 //busqueda por modelo, primera funcion de la opcion reportes
 void busqueda2(char modbus1[20]){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);	
 	int band=0;
 	struct fecha f1,f2;
@@ -304,9 +283,6 @@ if(strcmp(rial,"Si")==0||strcmp(rial,"si")==0||strcmp(rial,"SI")==0){
 
 //busqueda por color,tercera funcion de la opcion reportes
 void busqueda3 ( char colorbus1[20] ){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);
 	int band=0;
 	int i;
@@ -345,9 +321,6 @@ void busqueda3 ( char colorbus1[20] ){
 
 
 void incluir(){
-	system("CLS");
-	barra();
-	system("CLS");
 char serialbus[20];
 bool fechavalida1, fechavalida2;
 
@@ -462,9 +435,6 @@ getch();
 
 
 void consultar(){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);
 int m,i; system("CLS"); //system("CLS") es clean screen, para quitar todo de la pantalla
 
@@ -508,9 +478,6 @@ char serialcomp[20]; //una variable para comparar la serial ingresada con las se
 
 
 void modificar(){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);
 	bool fechavalida1, fechavalida2;
 	char serialbus[20],posee[2];
@@ -635,9 +602,6 @@ getche();
 
 
 void eliminar(){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);
 	int m,i; system("CLS");
 	char serialbus[20];
@@ -671,10 +635,7 @@ void eliminar(){
 
 
 //lista
-void modeloporperiodo(struct vehiculo vehi){
-system("CLS");
-barra();
-system("CLS");
+void modeloporperiodo(struct vehiculo vehi){	
 fflush(stdin);
 system("CLS");
 char modbus[20];
@@ -690,9 +651,6 @@ busqueda2(modbus);
 
 
 void totalpormarca(struct vehiculo vehi){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);system("CLS");
 	int band=0,i;
 	FILE*arch1;
@@ -762,9 +720,6 @@ void totalpormarca(struct vehiculo vehi){
 
 //lista
 void coberturacolor(struct vehiculo vehi){
-	system("CLS");
-	barra();
-	system("CLS");
 	fflush(stdin);system("CLS");
 	int m;
 	char color[20];
@@ -777,11 +732,9 @@ void coberturacolor(struct vehiculo vehi){
 };
 
 
-//funcion que muestre una consulta del vehiculo que posee el monto mas alto
+//función que muestre una consulta del vehículo que posee el monto más alto
 //por concepto de cobertura ingresado por el usuario.
 void consultaporgrantia() {
-	system("CLS");
-	barra();
     fflush(stdin);
     system("CLS");
 
@@ -794,7 +747,7 @@ void consultaporgrantia() {
     printf("Ingrese el concepto de la garantia que desea buscar: ");
     gets(conceptobus);
 
-    // Convierte el concepto a minusculas para evitar problemas relacionados a letras mayusculas y minusculas durante la busqueda.
+    // Convierte el concepto a minúsculas para evitar problemas relacionados a letras mayusculas y minúsculas durante la busqueda.
     for (int i = 0; conceptobus[i]; i++) {
         conceptobus[i] = tolower(conceptobus[i]);
     }
@@ -802,7 +755,7 @@ void consultaporgrantia() {
     // Abre el archivo en formato solo lectura "read".
     FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
 
-    // Validacion de una apertura correcta del archivo.
+    // Validación de una apertura correcta del archivo.
     if (arch1 == NULL) {
         printf("No se pudo abrir el archivo.\n");
         getch ();
@@ -815,7 +768,7 @@ void consultaporgrantia() {
         for (int i = 0; i < vehi.ngarant; i++) {
             char conceptolower[20];
             strcpy(conceptolower, vehi.g[i].concepto);
-            // Convierte a minusculas el concepto de garantia.
+            // Convierte a minúsculas el concepto de garantía.
             for (int j = 0; conceptolower[j]; j++) {
                 conceptolower[j] = tolower(conceptolower[j]);
             }
@@ -833,14 +786,14 @@ void consultaporgrantia() {
     // Cierra el archivo.
     fclose(arch1);
 
-    // Preguntamos al usuario si desea su monton en Bs. o en USD.
+    // Preguntamos al usuario si desea su monton en Bs. ó en USD.
     char currency[4];
     float tasa = 0.0;
 
     printf("Desea el monto en Bs. o USD? (Bs/USD): ");
     gets(currency);
 
-    // Convertimos la opcion de la funcion currency a minuscula para evitar problemas.
+    // Convertimos la opción de la función currency a minúscula para evitar problemas.
     for (int i = 0; currency[i]; i++) {
         currency[i] = tolower(currency[i]);
     }
@@ -898,7 +851,6 @@ break;
 };
 
 int main(){
-	barra();
 struct vehiculo vehi;
 do{
 sel = menu();
