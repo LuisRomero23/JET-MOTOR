@@ -15,6 +15,19 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(hcon, dwPos);
 }
 
+void barra() {
+    int segundo = 2, i;
+    gotoxy(50, 25);
+    printf("====== CARGANDO ===== \n");
+
+    gotoxy(4, 26);
+    for (i = 0; i <= 112; i++) {
+        printf("|");
+        Sleep(segundo * 1000 / 80);
+    }
+    system("CLS");
+}
+
 struct fecha {
     int dia, mes, anio;
 };
@@ -89,64 +102,42 @@ bool validarfecha(int dia, int mes, int anio) {
     return true;
 }
 
-void barra() {
-    int segundo = 2, i;
-    gotoxy(50, 25);
-    printf("====== CARGANDO ===== \n");
-
-    gotoxy(4, 26);
-    for (i = 0; i <= 112; i++) {
-        printf("|");
-        Sleep(segundo * 1000 / 80);
-    }
-}
-
 char sel;
 
-char menu(){ 
-char y; system("CLS");
+char menu() {
+    char y;
+    system("CLS");
 
-gotoxy(1,2);printf("		   $$$$$| $$$$$$$$$ $$$$$$$$$|      $$       $$   $$$$$$  $$$$$$$$ |  $$$$$$   $$$$$$$    $$$$$$   ");
-gotoxy(1,3);printf("		   $__$$ |$$  _____|$__$$  __|      $$$     $$$ |$$  __$$ |__$$  __|$$  __$$  $$  __$$  $$  __$$  ");
-gotoxy(1,4);printf("		      $$ |$$ |         $$ |         $$$$   $$$$ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$ |  __|");
-gotoxy(1,5);printf("		      $$ |$$$$$$       $$ |         $$ $$ $$ $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$$$$$$  | $$$$$$   ");
-gotoxy(1,6);printf("		$$$   $$ |$$  __|      $$ |         $$  $$$  $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$  __$$<  $____$$  ");
-gotoxy(1,7);printf("		$$ |  $$ |$$ |         $$ |         $$ | $  $ $ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$    $$ |");
-gotoxy(1,8);printf("		$$$$$$$  |$$$$$$$$$    $$ |         $$ | |_| $$ | $$$$$$  |  $$ |    $$$$$$  |$$ |  $$ | $$$$$$  |");
-gotoxy(1,9);printf("		 $______$ $________|   $__|         |__|     |__| $______$   |__|    $______$|__ |  |__| $______$ ");
+    gotoxy(10, 2);  printf("   $$$$$| $$$$$$$$$ $$$$$$$$$|      $$       $$   $$$$$$  $$$$$$$$ |  $$$$$$   $$$$$$$    $$$$$$   ");
+    gotoxy(10, 3);  printf("   $__$$ |$$  _____|$__$$  __|      $$$     $$$ |$$  __$$ |__$$  __|$$  __$$  $$  __$$  $$  __$$  ");
+    gotoxy(10, 4);  printf("      $$ |$$ |         $$ |         $$$$   $$$$ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$ |  __|");
+    gotoxy(10, 5);  printf("      $$ |$$$$$$       $$ |         $$ $$ $$ $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$$$$$$  | $$$$$$   ");
+    gotoxy(10, 6);  printf("$$$   $$ |$$  __|      $$ |         $$  $$$  $$ |$$ |  $$ |  $$ |   $$ |  $$ |$$  __$$<  $____$$  ");
+    gotoxy(10, 7);  printf("$$ |  $$ |$$ |         $$ |         $$ | $  $ $ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |$$    $$ |");
+    gotoxy(10, 8);  printf("$$$$$$$  |$$$$$$$$$    $$ |         $$ | |_| $$ | $$$$$$  |  $$ |    $$$$$$  |$$ |  $$ | $$$$$$  |");
+    gotoxy(10, 9);  printf(" $______$ $________|   $__|         |__|     |__| $______$   |__|    $______$|__ |  |__| $______$ ");
 
-gotoxy(30,14);printf("Menu de Opciones");
+    gotoxy(35, 14); printf("Menu de Opciones");
 
-gotoxy(30,16);printf("1.- Incluir Registros");
+    gotoxy(35, 16); printf("1.- Incluir Registros");
+    gotoxy(35, 18); printf("2.- Consultar Registros");
+    gotoxy(35, 20); printf("3.- Modificar Registros");
+    gotoxy(35, 22); printf("4.- Eliminar Registros");
+    gotoxy(35, 24); printf("5.- Reportes");
+    gotoxy(35, 26); printf("6.- Salida");
 
-gotoxy(30,18);printf("2.- Consultar Registros");
+    gotoxy(50, 28); printf("Seleccion: ");
 
-gotoxy(30,20);printf("3.- Modificar Registros");
+    y = getchar();
+    return y;
+}
 
-gotoxy(30,22);printf("4.- Eliminar Registros");
-
-gotoxy(30,24);printf("5.- Reportes");
-
-gotoxy(30,26);printf("6.- Salida");
-
-gotoxy(50,28);printf("Seleccion: ");
-
-y = getchar();
-return (y); }
-
-void conversor(float total) {
-    float tasa, endolar;
-
-    do {
-        printf("Ingrese la tasa de conversion (Bs.-> $): ");
-        scanf("%f", &tasa);
-        if (tasa <= 0) {
-            printf("Tasa de conversion invalida. Intente nuevamente.\n");
-        }
-    } while (tasa <= 0);
-
-    endolar = total / tasa;
-
+void conversor(float total, float tasa) {
+    if (tasa <= 0) {
+        printf("Tasa de conversion invalida.\n");
+        return;
+    }
+    float endolar = total / tasa;
     printf("El valor en USD es %.2f $\n", endolar);
 }
 
@@ -170,14 +161,11 @@ char submenu() {
 }
 
 int busqueda(char serialbus1[20]) {
-    system("CLS");
-    barra();
-    system("CLS");
     int band = 0;
     int z;
     FILE* arch1;
 
-    arch1 = fopen("JETMOTORSG11.dat", "r");
+    arch1 = fopen("JETMOTORSG11.dat", "rb");
 
     if (arch1 == NULL) {
         printf("Error al abrir el archivo.\n");
@@ -211,7 +199,7 @@ void busqueda2(char modbus1[20]) {
     char rial[2];
     FILE* arch1;
 
-    arch1 = fopen("JETMOTORSG11.dat", "r");
+    arch1 = fopen("JETMOTORSG11.dat", "rb");
 
     if (arch1 == NULL) {
         printf("Error al abrir el archivo.\n");
@@ -275,7 +263,15 @@ void busqueda2(char modbus1[20]) {
         printf("Desea su total expresado en USD?(SI/NO.):"); gets(rial);
 
         if (strcmp(rial, "Si") == 0 || strcmp(rial, "si") == 0 || strcmp(rial, "SI") == 0) {
-            conversor(total);
+            float tasa;
+            do {
+                printf("Ingrese la tasa de conversion (Bs.-> $): ");
+                scanf("%f", &tasa);
+                if (tasa <= 0) {
+                    printf("Tasa de conversion invalida. Intente nuevamente.\n");
+                }
+            } while (tasa <= 0);
+            conversor(total, tasa);
         } else {
             printf("El total acumulado es %.2f Bs.", total);
         }
@@ -291,38 +287,72 @@ void busqueda3(char colorbus1[20]) {
     fflush(stdin);
     int band = 0;
     char rial[2];
+    float total = 0;
 
     FILE* arch1;
-    arch1 = fopen("JETMOTORSG11.dat", "r");
+    arch1 = fopen("JETMOTORSG11.dat", "rb");
 
     if (arch1 == NULL) {
         printf("Error al abrir el archivo.\n");
         return;
     }
 
-    while (fread(&vehi, sizeof(vehi), 1, arch1) == 1) {
-        if (strcmp(vehi.color, colorbus1) == 0 && vehi.ngarant >= 2) {
-            printf("\nModelo del vehiculo: %s", vehi.modelo);
+    for (int i = 0; colorbus1[i]; i++) {
+        colorbus1[i] = tolower(colorbus1[i]);
+    }
 
+    while (fread(&vehi, sizeof(vehi), 1, arch1) == 1) {
+        char colorLower[20];
+        strcpy(colorLower, vehi.color);
+        for (int j = 0; colorLower[j]; j++) {
+            colorLower[j] = tolower(colorLower[j]);
+        }
+
+        if (strcmp(colorLower, colorbus1) == 0) {
+            printf("\nModelo del vehiculo: %s", vehi.modelo);
             for (int i = 0; i < vehi.ngarant; i++) {
                 cout << "\nConcepto de la garantia #" << i + 1 << ": " << vehi.g[i].concepto;
                 cout << "\nPorcentaje de la garantia #" << i + 1 << ": " << vehi.g[i].cobertura << "%";
             }
-
-            printf("\nDesea el precio expresado en USD?(SI/NO):"); gets(rial);
-
-            if (strcmp(rial, "Si") == 0 || strcmp(rial, "si") == 0 || strcmp(rial, "SI") == 0) {
-                conversor(vehi.precio);
-            } else {
-                printf("\nPrecio del vehiculo: %.2f Bs.\n ", vehi.precio);
-            }
-
+            printf("\nPrecio del vehiculo: %.2f Bs.\n", vehi.precio);
+            total += vehi.precio;
             band++;
         }
     }
+
     if (band == 0) {
-        printf("No se encontraron vehiculos del color indicado y con mas de dos garantias\n");
+        printf("No se encontraron vehiculos del color indicado\n");
+    } else {
+        fflush(stdin);
+        printf("Desea su total expresado en USD?(SI/NO.):"); gets(rial);
+
+        if (strcmp(rial, "Si") == 0 || strcmp(rial, "si") == 0 || strcmp(rial, "SI") == 0) {
+            float tasa;
+            do {
+                printf("Ingrese la tasa de conversion (Bs.-> $): ");
+                scanf("%f", &tasa);
+                if (tasa <= 0) {
+                    printf("Tasa de conversion invalida. Intente nuevamente.\n");
+                }
+            } while (tasa <= 0);
+
+            rewind(arch1);
+            while (fread(&vehi, sizeof(vehi), 1, arch1) == 1) {
+                char colorLower[20];
+                strcpy(colorLower, vehi.color);
+                for (int j = 0; colorLower[j]; j++) {
+                    colorLower[j] = tolower(colorLower[j]);
+                }
+                if (strcmp(colorLower, colorbus1) == 0) {
+                    float endolar = vehi.precio / tasa;
+                    printf("El precio del vehiculo modelo %s en USD es %.2f $\n", vehi.modelo, endolar);
+                }
+            }
+        } else {
+            printf("El total acumulado es %.2f Bs.", total);
+        }
     }
+
     fclose(arch1);
 }
 
@@ -426,14 +456,16 @@ void incluir() {
         }
 
         FILE* arch1;
-        arch1 = fopen("JETMOTORSG11.dat", "at+");
+        arch1 = fopen("JETMOTORSG11.dat", "ab+");
 
         if (arch1 == NULL) {
             printf("Error al abrir el archivo.\n");
             return;
         }
 
-        fwrite(&vehi, sizeof(vehi), 1, arch1);
+        if (fwrite(&vehi, sizeof(vehi), 1, arch1) != 1) {
+            printf("Error al escribir en el archivo.\n");
+        }
         fclose(arch1);
 
         printf("\nRegistro Insertado");
@@ -506,7 +538,7 @@ void modificar() {
 
     if (m == 1) {
         FILE* arch1;
-        arch1 = fopen("JETMOTORSG11.dat", "r");
+        arch1 = fopen("JETMOTORSG11.dat", "rb");
 
         if (arch1 == NULL) {
             printf("Error al abrir el archivo.\n");
@@ -514,7 +546,7 @@ void modificar() {
         }
 
         FILE* arch2;
-        arch2 = fopen("temp.dat", "at+");
+        arch2 = fopen("temp.dat", "wb");
 
         if (arch2 == NULL) {
             printf("Error al abrir el archivo temporal.\n");
@@ -609,7 +641,7 @@ void modificar() {
         fclose(arch2);
         remove("JETMOTORSG11.dat");
         rename("temp.dat", "JETMOTORSG11.dat");
-        printf("\nRegristro modificado");
+        printf("\nRegistro modificado");
     } else {
         printf("\nSerial no encontrado");
     }
@@ -631,7 +663,7 @@ void eliminar() {
 
     if (m == 1) {
         FILE* arch1;
-        arch1 = fopen("JETMOTORSG11.dat", "r");
+        arch1 = fopen("JETMOTORSG11.dat", "rb");
 
         if (arch1 == NULL) {
             printf("Error al abrir el archivo.\n");
@@ -639,7 +671,7 @@ void eliminar() {
         }
 
         FILE* arch2;
-        arch2 = fopen("temp.dat", "at+");
+        arch2 = fopen("temp.dat", "wb");
 
         if (arch2 == NULL) {
             printf("Error al abrir el archivo temporal.\n");
@@ -691,7 +723,7 @@ void totalpormarca(struct vehiculo vehi) {
     struct vehiculo arre[50];
     int numreg = 0;
 
-    arch1 = fopen("JETMOTORSG11.dat", "r");
+    arch1 = fopen("JETMOTORSG11.dat", "rb");
 
     if (arch1 == NULL) {
         printf("Error al abrir el archivo.\n");
@@ -719,13 +751,15 @@ void totalpormarca(struct vehiculo vehi) {
     } while (cambio == 1);
 
     char marca[20];
+    char rial[2];
+    float tasa = 0;
 
     for (int i = 0; i < numreg; i++) {
         if (i == 0) {
             strcpy(marca, arre[i].marca);
         }
         if (strcmp(marca, arre[i].marca) != 0) {
-            cout << endl << endl << "Total de " << marca << ": " << totalmarca << endl;
+            cout << endl << endl << "Total de " << marca << ": " << totalmarca << " Bs." << endl;
             totalmarca = 0;
             strcpy(marca, arre[i].marca);
         }
@@ -744,10 +778,52 @@ void totalpormarca(struct vehiculo vehi) {
         printf("\nColor del vehiculo:%s\n", arre[i].color);
         cout << "\n-----------------------------------------------------";
     }
-    cout << endl << "Total de " << marca << ": " << totalmarca << endl;
+    cout << endl << "Total de " << marca << ": " << totalmarca << " Bs." << endl;
     cout << "=====================================================================" << endl;
-    cout << endl << "Total General: " << totalgral << endl;
+    cout << endl << "Total General: " << totalgral <<" Bs."<< endl;
     cout << "======================================================================";
+
+    fflush(stdin);
+    printf("\nDesea su total expresado en USD?(SI/NO.):"); gets(rial);
+
+    if (strcmp(rial, "Si") == 0 || strcmp(rial, "si") == 0 || strcmp(rial, "SI") == 0) {
+        do {
+            printf("\nIngrese la tasa de conversion (Bs.-> $): ");
+            scanf("%f", &tasa);
+            if (tasa <= 0) {
+                printf("Tasa de conversion invalida. Intente nuevamente.\n");
+            }
+        } while (tasa <= 0);
+
+        for (int i = 0; i < numreg; i++) {
+            if (i == 0) {
+                strcpy(marca, arre[i].marca);
+            }
+            if (strcmp(marca, arre[i].marca) != 0) {
+                cout << endl << endl << "Total de " << marca << ": " << totalmarca / tasa << " USD" << endl;
+                totalmarca = 0;
+                strcpy(marca, arre[i].marca);
+            }
+            float endolar = arre[i].precio / tasa;
+            totalmarca += arre[i].precio;
+            totalgral += arre[i].precio;
+            cout << "\n-----------------------------------------------------";
+            printf("\nSerial del vehiculo:%s", arre[i].serial);
+            printf("\nModelo del vehiculo:%s", arre[i].modelo);
+            printf("\nMarca del vehiculo:%s", arre[i].marca);
+            cout << "\nFecha de fabricacion del vehiculo ";
+            cout << "\nDia de fabricacion: " << arre[i].ffab.dia;
+            cout << "\nMes de fabricacion: " << arre[i].ffab.mes;
+            cout << "\nAnio de fabricacion: " << arre[i].ffab.anio;
+            printf("\nPrecio del vehiculo:%.2f Bs. o %.2f USD", arre[i].precio, endolar);
+            printf("\nColor del vehiculo:%s\n", arre[i].color);
+            cout << "\n-----------------------------------------------------";
+        }
+        cout << endl << "Total de " << marca << ": " << totalmarca / tasa << " USD" << endl;
+        cout << "=====================================================================" << endl;
+        cout << endl << "Total General: " << totalgral / tasa <<" USD"<< endl;
+        cout << "======================================================================";
+    }
 
     fclose(arch1);
     getche();
@@ -787,7 +863,7 @@ void consultaporgrantia() {
         conceptobus[i] = tolower(conceptobus[i]);
     }
 
-    FILE* arch1 = fopen("JETMOTORSG11.dat", "r");
+    FILE* arch1 = fopen("JETMOTORSG11.dat", "rb");
 
     if (arch1 == NULL) {
         printf("No se pudo abrir el archivo.\n");
@@ -818,7 +894,7 @@ void consultaporgrantia() {
     char currency[4];
     float tasa = 0.0;
 
-    printf("Desea el monto en Bs. o USD? (Bs/USD): ");
+    printf("\nDesea el monto en Bs. o USD? (Bs/USD): ");
     gets(currency);
 
     for (int i = 0; currency[i]; i++) {
@@ -826,7 +902,7 @@ void consultaporgrantia() {
     }
 
     if (strcmp(currency, "usd") == 0) {
-        printf("Ingrese la tasa de conversion (Bs. -> $): ");
+        printf("\nIngrese la tasa de conversion (Bs. -> $): ");
         do {
             scanf("%f", &tasa);
             if (tasa <= 0) {
